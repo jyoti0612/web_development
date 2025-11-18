@@ -74,28 +74,31 @@
 
         <div class="gallery-grid">
           <article class="media-card">
-            <img src="assets/tree.jpg" alt="Tree planting" />
+            <a href="projects/urban-tree.html"><img src="assets/tree.jpg" alt="Tree planting" /></a>
             <div class="media-body">
               <h4>Urban Tree Planting</h4>
               <p>Increasing tree canopy in neighborhoods to cool streets and
               absorb CO2.</p>
+              <p><a href="projects/urban-tree.html">Read project</a></p>
             </div>
           </article>
 
           <article class="media-card">
-            <img src="assets/solar.jpg" alt="Solar panels" />
+            <a href="projects/community-solar.html"><img src="assets/solar.jpg" alt="Solar panels" /></a>
             <div class="media-body">
               <h4>Community Solar</h4>
               <p>Shared solar projects on municipal roofs for affordable clean
               energy.</p>
+              <p><a href="projects/community-solar.html">Read project</a></p>
             </div>
           </article>
 
           <article class="media-card">
-            <img src="assets/bike.jpg" alt="Protected bike lane" />
+            <a href="projects/sustainable-transport.html"><img src="assets/bike.jpg" alt="Protected bike lane" /></a>
             <div class="media-body">
               <h4>Sustainable Transport</h4>
               <p>Protected bike lanes and safe walking routes to reduce car use.</p>
+              <p><a href="projects/sustainable-transport.html">Read project</a></p>
             </div>
           </article>
 
@@ -124,6 +127,21 @@
           </article>
         </div>
       </section>
+
+      <section id="events" class="content-section">
+        <h2>Upcoming Events & Volunteer Opportunities</h2>
+        <ul class="events-list">
+          <li><strong>Beach Cleanup</strong> — Sat, 29 Nov 2025 (Goa North Beach). <a href="#">Sign up</a></li>
+          <li><strong>Community Solar Workshop</strong> — Wed, 03 Dec 2025 (Municipal Hall). <a href="#">Register</a></li>
+          <li><strong>Urban Tree Drive</strong> — Sun, 07 Dec 2025 (Tree nursery). <a href="#">Volunteer</a></li>
+        </ul>
+      </section>
+
+      <section id="map-section" class="content-section">
+        <h2>Report & Map — Local Issues</h2>
+        <p class="muted">Click markers to read reports submitted by community members.</p>
+        <div id="map" style="height:420px;border-radius:10px;overflow:hidden;margin-top:1rem"></div>
+      </section>
     </main>
 
     <footer id="contact" class="site-footer">
@@ -143,5 +161,35 @@
       </div>
       <div class="container small">© 2025 Climate Action Demo</div>
     </footer>
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+qvH0gqH5Fqf1p0d6m4ZsQb0w1sKZk+8o3r8wM9JE=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1jv+Hz4gk6tXQGk9m0ZrYpQmG7rK1a4qGz8m7sa8=" crossorigin=""></script>
+
+    <script>
+      // Initialize Leaflet map and load sample GeoJSON
+      document.addEventListener('DOMContentLoaded', function () {
+        try {
+          var map = L.map('map').setView([15.4920, 73.83], 13);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+          }).addTo(map);
+
+          fetch('data/reports.geojson').then(function (r) { return r.json(); }).then(function (geojson) {
+            L.geoJSON(geojson, {
+              onEachFeature: function (feature, layer) {
+                var p = feature.properties || {};
+                var html = '<strong>' + (p.title || 'Report') + '</strong><br/>' + (p.description || '') + '<br/><em>' + (p.date||'') + '</em>';
+                layer.bindPopup(html);
+              }
+            }).addTo(map);
+          }).catch(function (err) {
+            console.warn('Could not load GeoJSON:', err);
+          });
+        } catch (e) {
+          console.error('Map init error', e);
+        }
+      });
+    </script>
   </body>
 </html>

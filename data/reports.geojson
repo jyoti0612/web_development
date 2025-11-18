@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"title": "Flooding on Beach Road", "description": "Minor coastal flooding after heavy rain.", "date":"2025-11-10"},
+      "geometry": {"type": "Point", "coordinates": [73.8354, 15.4909]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"title": "Illegal dumping", "description": "Large pile of waste behind market.", "date":"2025-11-12"},
+      "geometry": {"type": "Point", "coordinates": [73.8260, 15.4985]}
+    },
+    {
+      "type": "Feature",
+      "properties": {"title": "Heat stress report", "description": "Tree canopy needed near playground.", "date":"2025-11-14"},
+      "geometry": {"type": "Point", "coordinates": [73.8275, 15.4860]}
+    }
+  ]
+}
